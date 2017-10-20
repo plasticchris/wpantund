@@ -51,6 +51,8 @@
 #define WPANTUND_IF_CMD_ATTACH                "Attach"
 
 #define WPANTUND_IF_CMD_RESET                 "Reset"
+#define WPANTUND_IF_CMD_REBOOT_BOOTLOADER     "Bootloader"
+
 #define WPANTUND_IF_CMD_STATUS                "Status"
 
 #define WPANTUND_IF_CMD_ROUTE_ADD             "RouteAdd"

@@ -95,6 +95,10 @@ public:
 		CallbackWithStatus cb = NilReturn()
 	);
 
+        virtual void reboot_bootloader(
+                CallbackWithStatus cb = NilReturn()
+        );
+
 	virtual void permit_join(
 		int seconds = 15 * 60,
 		uint8_t commissioning_traffic_type = 0xFF,

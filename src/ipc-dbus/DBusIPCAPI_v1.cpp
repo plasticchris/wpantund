@@ -69,6 +69,7 @@ DBusIPCAPI_v1::init_callback_tables()
 		&DBusIPCAPI_v1::member_func, this, _1, _2)
 
 	INTERFACE_CALLBACK_CONNECT(WPANTUND_IF_CMD_RESET, interface_reset_handler);
+        INTERFACE_CALLBACK_CONNECT(WPANTUND_IF_CMD_REBOOT_BOOTLOADER, interface_reboot_bootloader_handler);
 	INTERFACE_CALLBACK_CONNECT(WPANTUND_IF_CMD_STATUS, interface_status_handler);
 
 	INTERFACE_CALLBACK_CONNECT(WPANTUND_IF_CMD_JOIN, interface_join_handler);
@@ -577,6 +578,22 @@ DBusIPCAPI_v1::interface_reset_handler(
 	ret = DBUS_HANDLER_RESULT_HANDLED;
 
 	return ret;
+}
+
+DBusHandlerResult
+DBusIPCAPI_v1::interface_reboot_bootloader_handler(
+        NCPControlInterface* interface,
+        DBusMessage *        message
+) {
+        DBusHandlerResult ret = DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+
+        dbus_message_ref(message);
+
+        interface->reboot_bootloader(boost::bind(&DBusIPCAPI_v1::CallbackWithStatus_Helper,
+                                                                 this, _1, message));
+        ret = DBUS_HANDLER_RESULT_HANDLED;
+
+        return ret;
 }
 
 DBusHandlerResult

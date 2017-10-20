@@ -119,6 +119,10 @@ public:
 		CallbackWithStatus cb = NilReturn()
 	) = 0;
 
+        virtual void reboot_bootloader(
+                CallbackWithStatus cb = NilReturn()
+        ) = 0;
+
 	virtual void refresh_state(
 		CallbackWithStatus cb = NilReturn()
 	) = 0;

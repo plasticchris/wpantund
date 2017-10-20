@@ -98,6 +98,11 @@ private:
 		DBusMessage *        message
 	);
 
+        DBusHandlerResult interface_reboot_bootloader_handler(
+                NCPControlInterface* interface,
+                DBusMessage *        message
+        );
+
 	DBusHandlerResult interface_status_handler(
 		NCPControlInterface* interface,
 		DBusMessage *        message

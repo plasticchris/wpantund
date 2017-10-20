@@ -33,6 +33,7 @@ const char reset_cmd_syntax[] = "[args]";
 static const arg_list_item_t reset_option_list[] = {
 	{'h', "help", NULL, "Print Help"},
 	{'t', "timeout", "ms", "Set timeout period"},
+        {'b', "bootloader", NULL, "reset and hold in bootloader"},
 	{0}
 };
 
@@ -45,6 +46,7 @@ int tool_cmd_reset(int argc, char *argv[])
 	DBusMessage *message = NULL;
 	DBusMessage *reply = NULL;
 	DBusError error;
+	char * reset_command = WPANTUND_IF_CMD_RESET;
 
 	dbus_error_init(&error);
 
@@ -52,6 +54,7 @@ int tool_cmd_reset(int argc, char *argv[])
 		static struct option long_options[] = {
 			{"help", no_argument, 0, 'h'},
 			{"timeout", required_argument, 0, 't'},
+                        {"bootloader", no_argument, 0, 'b'},
 			{0, 0, 0, 0}
 		};
 
@@ -71,7 +74,11 @@ int tool_cmd_reset(int argc, char *argv[])
 		case 't':
 			timeout = strtol(optarg, NULL, 0);
 			break;
-		}
+
+                case 'b':
+                        reset_command = WPANTUND_IF_CMD_REBOOT_BOOTLOADER;
+                        break;
+                }
 	}
 
 	if (optind < argc) {
@@ -120,7 +127,7 @@ int tool_cmd_reset(int argc, char *argv[])
 		    interface_dbus_name,
 		    path,
 		    WPANTUND_DBUS_APIv1_INTERFACE,
-		    WPANTUND_IF_CMD_RESET
+		    reset_command
 		    );
 
 		fprintf(stderr, "Resetting NCP. . .\n");

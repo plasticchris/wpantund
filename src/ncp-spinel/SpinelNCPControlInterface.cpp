@@ -142,6 +142,20 @@ SpinelNCPControlInterface::reset(CallbackWithStatus cb)
 }
 
 void
+SpinelNCPControlInterface::reboot_bootloader(CallbackWithStatus cb)
+{
+        if (mNCPInstance->get_ncp_state() == FAULT) {
+                mNCPInstance->change_ncp_state(UNINITIALIZED);
+        }
+
+        mNCPInstance->start_new_task(SpinelNCPTaskSendCommand::Factory(mNCPInstance)
+                .set_callback(CallbackWithStatus(boost::bind(cb,kWPANTUNDStatus_Ok)))
+                .add_command(SpinelPackData(SPINEL_FRAME_PACK_CMD_REBOOT_BOOTLOADER))
+                .finish()
+        );
+}
+
+void
 SpinelNCPControlInterface::begin_net_wake(uint8_t data, uint32_t flags, CallbackWithStatus cb)
 {
 	// TODO: Writeme!

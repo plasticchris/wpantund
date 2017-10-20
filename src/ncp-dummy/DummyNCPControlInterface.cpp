@@ -97,6 +97,13 @@ DummyNCPControlInterface::reset(CallbackWithStatus cb)
 }
 
 void
+DummyNCPControlInterface::reboot_bootloader(CallbackWithStatus cb)
+{
+        // TODO: Writeme!
+        cb(kWPANTUNDStatus_FeatureNotImplemented);
+}
+
+void
 DummyNCPControlInterface::begin_net_wake(uint8_t data, uint32_t flags, CallbackWithStatus cb)
 {
 	// TODO: Writeme!
